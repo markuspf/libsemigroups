@@ -65,6 +65,11 @@ namespace libsemigroups {
   template <typename TElementType  = Element const*,
             typename TElementHash  = std::hash<TElementType>,
             typename TElementEqual = std::equal_to<TElementType>>
+    // Florent : I didn't manage to get that working...
+    //            typename TElementHash  =
+    //               std::hash<typename ElementContainer<TElementType>::value_type>,
+    //            typename TElementEqual =
+    //               std::equal_to<typename ElementContainer<TElementType>::value_type>>
   class Semigroup : public ElementContainer<TElementType>,
                     public SemigroupBase {
     using value_type = typename ElementContainer<TElementType>::value_type;
@@ -1704,6 +1709,7 @@ namespace libsemigroups {
       typedef typename std::vector<TElementType>::size_type  size_type;
       typedef typename std::vector<T>::difference_type       difference_type;
       typedef typename std::vector<TElementType>::value_type value_type;
+      // Florent : Move that logic in eltcont.h
       using iterated_value =
           typename std::conditional<std::is_trivial<value_type>::value,
                                     const_value_type,
@@ -1818,6 +1824,7 @@ namespace libsemigroups {
 
     struct IteratorMethods : public ElementContainer<TElementType> {
       IteratorMethods() {}
+      // Florent : Move that logic in eltcont.h
       using iterated_value =
           typename std::conditional<std::is_trivial<value_type>::value,
                                     const_value_type,
